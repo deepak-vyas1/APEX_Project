@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: hrms-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: hrms123
+      MYSQL_DATABASE: hrms_db
+      MYSQL_USER: hrms_user
+      MYSQL_PASSWORD: hrms_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./create-db-only.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - hrms-network
+
+  # HRMS Application
+  hrms-app:
+    build: .
+    container_name: hrms-app
+    environment:
+      NODE_ENV: production
+      DB_HOST: mysql
+      DB_USER: hrms_user
+      DB_PASSWORD: hrms_pass
+      DB_NAME: hrms_db
+      JWT_SECRET: your-super-secret-jwt-key-here
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    networks:
+      - hrms-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  hrms-network:
+    driver: bridge

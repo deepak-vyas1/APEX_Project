@@ -1,0 +1,18 @@
+{
+  "name": "apex-hrms-project",
+  "version": "1.0.0",
+  "description": "HRMS - Human Resource Management System",
+  "main": "hrms-project/backend/server.js",
+  "scripts": {
+    "start": "cd hrms-project && npm start",
+    "build": "cd hrms-project && npm run build",
+    "install-deps": "cd hrms-project/backend && npm install && cd ../frontend && npm install"
+  },
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
+  "keywords": ["hrms", "hr", "management", "angular", "nodejs"],
+  "author": "Deepak Vyas",
+  "license": "MIT"
+}
